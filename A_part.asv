@@ -65,8 +65,7 @@ grid on;
 
 
 %approximate
-K=500;
-power_fftshift_signal_sum=zeros(2048,1);
+K=500
 for i = 1:K
     b = (sign(randn(N, 1)) + 1)/2;
     X = bits_to_2PAM(b);
@@ -76,24 +75,19 @@ for i = 1:K
 
     %create signal to be sent by sender
     signal = conv(X_delta,phi)*Ts;
-    signal_t = [X_delta_time(1)+t(1):Ts:X_delta_time(end)+t(end)]; 
+    signal_t = [X_delta_time(1)+t(1):Ts:X_delta_time(end)+t(end)];
+    
 
 
     %fft signal
-   
+    figure(3)
     fftshift_signal = fftshift(fft(signal,Nf)*Ts);
     power_fftshift_signal = abs(fftshift_signal).^2;     % zero-centered power
-    power_fftshift_signal_sum=power_fftshift_signal_sum+power_fftshift_signal;
-    
+
+    semilogy(freq,power_fftshift_signal)
+    grid on;
 end
 
-%fft signal
-figure(4)
-power_fftshift_signal_sum_normal=power_fftshift_signal_sum/K;
-semilogy(freq,power_fftshift_signal_sum_normal)
-grid on;
 
-
-%theoretical 
 
 
