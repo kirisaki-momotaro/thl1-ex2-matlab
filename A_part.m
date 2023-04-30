@@ -1,7 +1,7 @@
 clear all
 close all
 
-
+%initial parameters
 T=0.01;
 over=10;
 Ts=T/over;
@@ -12,14 +12,14 @@ a=0.5;
  
 
 %A.1
-%create SRRC
+%create SRRC pulse
 [phi, t] = srrc_pulse(T, over, A, a);
 
 
 
 %FFT SRRC
-figure()
-Nf=2048;
+figure(20)
+Nf=2048; %number of samples
 Fs = 1/Ts;               % sampling frequency
 freq = (-Fs/2:Fs/Nf:Fs/2-1/Nf); % zero-centered frequency range
 %fft SRRC
@@ -29,9 +29,9 @@ power_fftshift_SRRC = abs(fftshift_SRRC).^2;     % zero-centered power
 semilogy(freq,power_fftshift_SRRC)
 grid on;
 
-%A2
-N=100;
-b = (sign(randn(N, 1)) + 1)/2;
+%A2 2PAM
+N=100; %number of symbols
+b = (sign(randn(N, 1)) + 1)/2; 
 X = bits_to_2PAM(b);
 
 X_delta = 1/Ts * upsample(X, over);
@@ -45,7 +45,7 @@ title('original signal')
 
 
 
-%create signal to be sent by sender
+%create modulated signal 
 signal = conv(X_delta,phi)*Ts;
 signal_t = [X_delta_time(1)+t(1):Ts:X_delta_time(end)+t(end)];
 figure(2)
@@ -66,8 +66,8 @@ grid on;
 
 
 
-%approximate
-K=500;
+%approximate spectral density
+K=500; %number of experiments
 power_fftshift_signal_sum=zeros(2048,1);
 for i = 1:K
     b = (sign(randn(N, 1)) + 1)/2;
@@ -89,7 +89,7 @@ for i = 1:K
     
 end
 
-%fft signal
+%plot spectral density approximation
 figure(4)
 power_fftshift_signal_sum_normal=power_fftshift_signal_sum/K;
 semilogy(freq,power_fftshift_signal_sum_normal)
@@ -97,7 +97,7 @@ grid on;
 hold on;
 
 
-%theoretical 
+%theoretical spectral density according to provided equation
 
 b = (sign(randn(N, 1)) + 1)/2;
 X = bits_to_2PAM(b);
@@ -111,7 +111,7 @@ semilogy(freq,theoretical_spectral_density)
 
 
 
-%A4
+%A4 4PAM
 N=100;
 b = randi(4,(N/2)-1,1); %generate uniformely numbers 1-4
 X = bits_to_4PAM(b);
@@ -140,7 +140,7 @@ power_fftshift_signal = (abs(fftshift_signal).^2)/0.5;     % zero-centered power
 semilogy(freq,power_fftshift_signal)
 grid on;
 
-%approximate
+%approximate spectral density
 K=500;
 power_fftshift_signal_sum=zeros(2048,1);
 for i = 1:K
@@ -163,7 +163,7 @@ for i = 1:K
     
 end
 
-%fft signal
+%plot spectral density approximation
 figure(9)
 power_fftshift_signal_sum_normal=power_fftshift_signal_sum/K;
 semilogy(freq,power_fftshift_signal_sum_normal)
@@ -171,7 +171,7 @@ grid on;
 hold on;
 
 
-%theoretical 
+%theoretical spectral density according to provided equation
 b = randi(4,(N/2)-1,1); %generate uniformely numbers 1-4
 X = bits_to_4PAM(b);
 theoretical_spectral_density=((var(X)^2)/T)*power_fftshift_SRRC
@@ -181,7 +181,7 @@ semilogy(freq,theoretical_spectral_density)
 
 
 
-%A5
+%A5 repeat A3 with over,T *=2
 T=0.02;
 over=20;
 Ts=T/over;
@@ -223,7 +223,7 @@ grid on;
 
 
 
-%approximate
+%approximate spectral density
 K=500;
 power_fftshift_signal_sum=zeros(2048,1);
 for i = 1:K
@@ -246,7 +246,7 @@ for i = 1:K
     
 end
 
-%fft signal
+%plot spectral density approximation
 figure(11)
 power_fftshift_signal_sum_normal=power_fftshift_signal_sum/K;
 semilogy(freq,power_fftshift_signal_sum_normal)
@@ -256,8 +256,7 @@ hold on;
 
 
 
-%theoretical 
-
+%theoretical spectral density according to provided equation
 b = (sign(randn(N, 1)) + 1)/2;
 X = bits_to_2PAM(b);
 theoretical_spectral_density=((var(X)^2)/T)*power_fftshift_SRRC
