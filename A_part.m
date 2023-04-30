@@ -101,5 +101,21 @@ X = bits_to_2PAM(b);
 theoretical_spectral_density=((var(X)^2)/T)*power_fftshift_SRRC
 semilogy(freq,theoretical_spectral_density)
 
+%A4
+N=100;
+b = randi(4,(N/2)-1,1); %generate uniformely numbers 1-4
+X = bits_to_4PAM(b);
+
+X_delta = 1/Ts * upsample(X, over);
+figure(6)
+
+X_delta_time = 0:Ts:((N/2)-1)*Ts*over-Ts;
+plot(X_delta_time,X_delta);
+grid on;
+title('original signal')
+
+
+
+
 
 
