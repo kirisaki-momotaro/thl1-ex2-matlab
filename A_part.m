@@ -92,14 +92,22 @@ figure(4)
 power_fftshift_signal_sum_normal=power_fftshift_signal_sum/K;
 semilogy(freq,power_fftshift_signal_sum_normal)
 grid on;
+hold on;
 
 
 %theoretical 
-figure(5)
+
 b = (sign(randn(N, 1)) + 1)/2;
 X = bits_to_2PAM(b);
 theoretical_spectral_density=((var(X)^2)/T)*power_fftshift_SRRC
 semilogy(freq,theoretical_spectral_density)
+
+
+
+
+
+
+
 
 %A4
 N=100;
@@ -114,8 +122,55 @@ plot(X_delta_time,X_delta);
 grid on;
 title('original signal')
 
+%create signal to be sent by sender
+signal = conv(X_delta,phi)*Ts;
+signal_t = [X_delta_time(1)+t(1):Ts:X_delta_time(end)+t(end)];
+figure(7)
+plot(signal_t,signal);
+grid on;
+title('modulated signal')
+
+%fft signal
+figure(8)
+fftshift_signal = fftshift(fft(signal,Nf)*Ts);
+power_fftshift_signal = (abs(fftshift_signal).^2)/0.5;     % zero-centered power
+
+semilogy(freq,power_fftshift_signal)
+grid on;
+
+%approximate
+K=500;
+power_fftshift_signal_sum=zeros(2048,1);
+for i = 1:K
+    b = randi(4,(N/2)-1,1); %generate uniformely numbers 1-4
+    X = bits_to_4PAM(b);
+
+    X_delta = 1/Ts * upsample(X, over);
+    X_delta_time = 0:Ts:((N/2)-1)*Ts*over-Ts;
+
+    %create signal to be sent by sender
+    signal = conv(X_delta,phi)*Ts;
+    signal_t = [X_delta_time(1)+t(1):Ts:X_delta_time(end)+t(end)]; 
 
 
+    %fft signal
+   
+    fftshift_signal = fftshift(fft(signal,Nf)*Ts);
+    power_fftshift_signal = (abs(fftshift_signal).^2)/0.5;     % zero-centered power
+    power_fftshift_signal_sum=power_fftshift_signal_sum+power_fftshift_signal;
+    
+end
+
+%fft signal
+figure(9)
+power_fftshift_signal_sum_normal=power_fftshift_signal_sum/K;
+semilogy(freq,power_fftshift_signal_sum_normal)
+grid on;
+hold on;
 
 
-
+%theoretical 
+b = randi(4,(N/2)-1,1); %generate uniformely numbers 1-4
+X = bits_to_4PAM(b);
+theoretical_spectral_density=((var(X)^2)/T)*power_fftshift_SRRC
+semilogy(freq,theoretical_spectral_density)
