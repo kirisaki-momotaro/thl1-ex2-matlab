@@ -95,5 +95,11 @@ grid on;
 
 
 %theoretical 
+figure(5)
+b = (sign(randn(N, 1)) + 1)/2;
+X = bits_to_2PAM(b);
+theoretical_spectral_density=((var(X)^2)/T)*power_fftshift_SRRC
+semilogy(freq,theoretical_spectral_density)
+
 
 
