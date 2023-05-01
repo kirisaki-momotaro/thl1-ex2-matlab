@@ -52,7 +52,7 @@ signal_t = [X_delta_time(1)+t(1):Ts:X_delta_time(end)+t(end)];
 figure(2)
 plot(signal_t,signal);
 grid on;
-title('modulated instance of 2PAM waveform')
+title('modulated waveform')
 
 
 %A3
@@ -63,7 +63,7 @@ fftshift_signal = fftshift(fft(signal,Nf)*Ts);
 power_fftshift_signal = abs(fftshift_signal).^2;     % zero-centered power
 
 semilogy(freq,power_fftshift_signal)
-title('Spectral density of modulated 2PAM waveform instance')
+title('spectral density of modulated waveform')
 grid on;
 
 
@@ -106,7 +106,7 @@ b = (sign(randn(N, 1)) + 1)/2;
 X = bits_to_2PAM(b);
 theoretical_spectral_density=((var(X)^2)/T)*power_fftshift_SRRC
 semilogy(freq,theoretical_spectral_density)
-title('Avg spectral density of modulated 2PAM waveform')
+title('approximated vs theoretical spectral density of modulated 2PAM waveform')
 legend('approx','theoretical')
 
 
@@ -133,7 +133,7 @@ signal_t = [X_delta_time(1)+t(1):Ts:X_delta_time(end)+t(end)];
 figure(7)
 plot(signal_t,signal);
 grid on;
-title('modulated instance of 4PAM waveform')
+title('modulated waveform')
 
 %fft signal
 figure(8)
@@ -141,7 +141,7 @@ fftshift_signal = fftshift(fft(signal,Nf)*Ts);
 power_fftshift_signal = (abs(fftshift_signal).^2)/0.5;     % zero-centered power
 
 semilogy(freq,power_fftshift_signal)
-title('Spectral density of modulated 4PAM waveform instance')
+title('spectral density of modulated waveform')
 grid on;
 
 %approximate spectral density
@@ -180,7 +180,7 @@ b = randi(4,(N/2)-1,1); %generate uniformely numbers 1-4
 X = bits_to_4PAM(b);
 theoretical_spectral_density=((var(X)^2)/T)*power_fftshift_SRRC
 semilogy(freq,theoretical_spectral_density)
-title('Avg spectral density of modulated 4PAM waveform')
+title('approximated vs theoretical spectral density of modulated 4PAM waveform')
 legend('approx','theoretical')
 
 
@@ -206,22 +206,20 @@ fftshift_SRRC = fftshift(fft(phi,Nf)*Ts);
 power_fftshift_SRRC = abs(fftshift_SRRC).^2;     % zero-centered power
 
 semilogy(freq,power_fftshift_SRRC)
-title('energy spectral density of new SRRC pulse Tnew=2T')
 grid on;
 %create signal to be sent by sender
 signal = conv(X_delta,phi)*Ts;
 signal_t = [X_delta_time(1)+t(1):Ts:X_delta_time(end)+t(end)];
-figure()
+figure(2)
 plot(signal_t,signal);
 grid on;
-title('modulated 2PAM signal Tnew=2T')
+title('modulated signal')
 %fft signal
 figure(10)
 fftshift_signal = fftshift(fft(signal,Nf)*Ts);
 power_fftshift_signal = abs(fftshift_signal).^2;     % zero-centered power
 
 semilogy(freq,power_fftshift_signal)
-title('Spectral density of modulated 2PAM waveform instance Tnew=2T')
 grid on;
 
 
@@ -264,6 +262,5 @@ b = (sign(randn(N, 1)) + 1)/2;
 X = bits_to_2PAM(b);
 theoretical_spectral_density=((var(X)^2)/T)*power_fftshift_SRRC
 semilogy(freq,theoretical_spectral_density)
-title('Avg Spectral density of modulated 2PAM waveform Tnew=2T')
-legend('approx','theoretical')
+
 
