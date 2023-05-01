@@ -267,3 +267,19 @@ semilogy(freq,theoretical_spectral_density)
 title('Avg Spectral density of modulated 2PAM waveform Tnew=2T')
 legend('approx','theoretical')
 
+
+
+%save images
+% FolderName = ('C:\Users\chris\Desktop\THL I\ex2\thl1-ex2-matlab\images');   % using my directory
+% FigList = findobj(allchild(0), 'flat', 'Type', 'figure');
+% for iFig = 1:length(FigList)
+%   FigHandle = FigList(iFig);
+%   FigName   = num2str(get(FigHandle, 'Number'));
+%   set(0, 'CurrentFigure', FigHandle);
+% %   saveas(FigHandle, strcat(FigName, '.png'));
+%   saveas(FigHandle, fullfile(FolderName,strcat(FigName, '.png'))); % specify the full path
+% end
+
+
+
+
