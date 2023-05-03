@@ -208,6 +208,17 @@ power_fftshift_SRRC = abs(fftshift_SRRC).^2;     % zero-centered power
 semilogy(freq,power_fftshift_SRRC)
 title('energy spectral density of new SRRC pulse Tnew=2T')
 grid on;
+%bitstring with new parameters
+b = (sign(randn(N, 1)) + 1)/2;
+X = bits_to_2PAM(b);
+
+X_delta = 1/Ts * upsample(X, over);    
+X_delta_time = 0:Ts:N*Ts*over-Ts;
+% figure(25)
+% plot(X_delta_time,X_delta);
+% grid on;
+% title('2PAM symbols waveform Tnew=2T')
+
 %create signal to be sent by sender
 signal = conv(X_delta,phi)*Ts;
 signal_t = [X_delta_time(1)+t(1):Ts:X_delta_time(end)+t(end)];
