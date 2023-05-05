@@ -5,7 +5,7 @@ F0=2; %rondomly decided cos frecuency
 
 t=1:0.01:pi; %define time
 %plot 5 instances of the given function
-figure(30)
+figure(24)
 for i =1:5
    X= normrnd(0,1) %gaussian distribution (0,1)
    FI= 2*pi*rand(1) %uniform distribution (0,2pi)
@@ -31,14 +31,14 @@ for i = 1:K
     power_fftshift_signal_sum=power_fftshift_signal_sum+power_fftshift_signal; %add up all waveforms
     
 end
-figure(40)
+figure(25)
 power_fftshift_signal_sum_normal=power_fftshift_signal_sum/K; %divide by K to normalize
 semilogy(power_fftshift_signal_sum_normal)
 grid on;
 
 
 
-%save images
+% save images
 % FolderName = ('C:\Users\chris\Desktop\THL I\ex2\thl1-ex2-matlab\images');   % using my directory
 % FigList = findobj(allchild(0), 'flat', 'Type', 'figure');
 % for iFig = 1:length(FigList)

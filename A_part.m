@@ -18,7 +18,7 @@ a=0.5;
 
 
 %FFT SRRC
-figure(20)
+figure(1)
 Nf=2048; %number of samples
 Fs = 1/Ts;               % sampling frequency
 freq = (-Fs/2:Fs/Nf:Fs/2-1/Nf); % zero-centered frequency range
@@ -36,7 +36,7 @@ b = (sign(randn(N, 1)) + 1)/2;
 X = bits_to_2PAM(b); %random symbols
 
 X_delta = 1/Ts * upsample(X, over); %upsample
-figure(1)
+figure(2)
 %X_delta_time = 0:N*over-1;
 X_delta_time = 0:Ts:N*Ts*over-Ts;
 plot(X_delta_time,X_delta);
@@ -49,7 +49,7 @@ title('2PAM symbols waveform')
 %create modulated signal 
 signal = conv(X_delta,phi)*Ts; %convolute symbols waveform with SRRC pulse
 signal_t = [X_delta_time(1)+t(1):Ts:X_delta_time(end)+t(end)];
-figure(2)
+figure(3)
 plot(signal_t,signal);
 grid on;
 title('modulated instance of 2PAM waveform')
@@ -58,7 +58,7 @@ title('modulated instance of 2PAM waveform')
 %A3
 
 %fft of modulated waveform
-figure(3)
+figure(4)
 fftshift_signal = fftshift(fft(signal,Nf)*Ts);
 power_fftshift_signal = abs(fftshift_signal).^2;     % zero-centered power
 
@@ -93,7 +93,7 @@ for i = 1:K
 end
 
 %plot spectral density approximation
-figure(4)
+figure(5)
 power_fftshift_signal_sum_normal=power_fftshift_signal_sum/K; %divide by K to normalize
 semilogy(freq,power_fftshift_signal_sum_normal)
 grid on;
@@ -197,7 +197,7 @@ a=0.5;
 [phi, t] = srrc_pulse(T, over, A, a);
 
 %NEW FFT SRRC
-figure()
+figure(10)
 Nf=2048;
 Fs = 1/Ts;               % sampling frequency
 freq = (-Fs/2:Fs/Nf:Fs/2-1/Nf); % zero-centered frequency range
@@ -222,12 +222,12 @@ X_delta_time = 0:Ts:N*Ts*over-Ts;
 %create signal to be sent by sender
 signal = conv(X_delta,phi)*Ts;
 signal_t = [X_delta_time(1)+t(1):Ts:X_delta_time(end)+t(end)];
-figure()
+figure(11)
 plot(signal_t,signal);
 grid on;
 title('modulated 2PAM signal Tnew=2T')
 %fft signal
-figure(10)
+figure(12)
 fftshift_signal = fftshift(fft(signal,Nf)*Ts);
 power_fftshift_signal = abs(fftshift_signal).^2;     % zero-centered power
 
@@ -261,7 +261,7 @@ for i = 1:K
 end
 
 %plot spectral density approximation
-figure(11)
+figure(13)
 power_fftshift_signal_sum_normal=power_fftshift_signal_sum/K;
 semilogy(freq,power_fftshift_signal_sum_normal)
 grid on;
