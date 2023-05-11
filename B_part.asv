@@ -17,6 +17,8 @@ end
 title('5 instances of X*cos(2*pi*F0*t+FI)')
 
 %power spectral density MAYBE WRONG!!!!!!!!!!!!!
+T=1/F0;
+
 K=500; %number of experiments
 power_fftshift_signal_sum=zeros(1,2048);
 for i = 1:K
@@ -26,7 +28,7 @@ for i = 1:K
 
     %fft signal
    
-    fftshift_signal = fftshift(fft(Yt,2048));
+    fftshift_signal = fftshift(fft(Yt,2048)*Ts);
     power_fftshift_signal = abs(fftshift_signal).^2;     % zero-centered power
     power_fftshift_signal_sum=power_fftshift_signal_sum+power_fftshift_signal; %add up all waveforms
     
@@ -34,8 +36,10 @@ end
 figure(25)
 
 power_fftshift_signal_sum_normal=power_fftshift_signal_sum/K; %divide by K to normalize
-t_S
-semilogy(power_fftshift_signal_sum_normal)
+Fs=1/Ts
+t_S=-Fs/2:Fs/2048:Fs/2-Fs/2048;
+plot(t_S,power_fftshift_signal_sum_normal)
+title('Spectral density of Sy(F)')
 grid on;
 
 
