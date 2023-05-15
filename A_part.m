@@ -66,7 +66,10 @@ semilogy(freq,power_fftshift_signal)
 title('Spectral density of modulated 2PAM waveform instance')
 grid on;
 
-
+figure(41)
+plot(freq,power_fftshift_signal)
+title('Spectral density of modulated 2PAM waveform instance')
+grid on;
 
 %approximate spectral density by adding up numerous different experiments
 %to get an approximation 
@@ -280,7 +283,7 @@ legend('approx','theoretical')
 
 
 
-%save images
+% save images
 % FolderName = ('C:\Users\chris\Desktop\THL I\ex2\thl1-ex2-matlab\images');   % using my directory
 % FigList = findobj(allchild(0), 'flat', 'Type', 'figure');
 % for iFig = 1:length(FigList)
